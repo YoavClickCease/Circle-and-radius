@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <style>
+    span {
+        border: 1px solid black;
+        display: flex;
+        height: 70px;
+        width: 400px;
+   }
+    canvas {
+        border: 2px solid black;
+        height:250px;
+        width:500px;
+    }
+    </style>
+</head>
+<body>
+    <h1>Input a value of a radius and get the volume of a sphere</h1>
+    <form>
+    Input a radius:
+    <input type="text" placeholder="input sphere radius" id="input">
+    <br>
+    <button onclick=showVolume() type=button>Submit Radius of Ball</button>
+    <br>
+    <br>
+    Volume outcome:
+    <span id="showVolume"></span>
+    </form>
+    <br>
+    <br>
+    <canvas id=CanvasArea></canvas>
+    <br>
+
+   <button onclick=clearTheBoard() type=button >Clear Drawing Board </button> 
+
+   <script>
+       var initialradius=0;
+        setInterval(document.onload=drawit, 100);
+       var radius;
+        var canvas = document.getElementById("CanvasArea");
+        var ctx = canvas.getContext("2d");
+        var centerX = canvas.width/2;
+        var centerY = canvas.height/2;
+
+   function showVolume(){
+        radius=(document.getElementById("input").value);
+        
+        //validation of input
+        if (Number.isInteger(radius)|| radius >= 0){
+
+            if (radius>75){ //validation of radius size
+                alert ("The radius value submitted exceeds the size of the canvas, please enter a new value");
+                return;
+            }
+           
+           //caculation of volume
+
+            var volume=(4*Math.PI*Math.pow(radius,3))/3;
+            document.getElementById("showVolume").innerText="The volume of the ball according to the submitted radius is: " +volume;
+            
+            //draw the sphere on canvas
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            return;
+        }
+        else{  //invalid input alert
+            alert("your input is invalid, please enter a new number that also isn't a negative");
+         }
+    }
+    function clearTheBoard(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }   
+
+    function drawit(){
+        if (initialradius<76){
+        canvas = document.getElementById("CanvasArea");
+        ctx = canvas.getContext("2d")
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, initialradius, 0, 2 * Math.PI);
+        ctx.stroke();
+        initialradius++;
+        }
+    }
+    
+    </script>
+    
+</body>
+</html>
